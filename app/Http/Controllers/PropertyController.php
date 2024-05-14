@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePropertyRequest;
 use App\Http\Requests\UpdatePropertyRequest;
 use App\Models\Property;
+use App\Http\Resources\PropertyResource;
+use App\Http\Resources\PropertyCollection;
 
 class PropertyController extends Controller
 {
@@ -13,8 +15,7 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        $properties = Property::all();
-        return response()->json($properties);
+        return new PropertyCollection(Property::all());
     }
 
 
@@ -25,7 +26,7 @@ class PropertyController extends Controller
     {
         $request->validated($request->all());
         $property = Property::create($request->all());
-        return response()->json($property, 201);
+        return new PropertyResource($property);
      }
 
     /**
@@ -33,8 +34,7 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        $property = Property::findOrFail($property->id);
-        return response()->json($property,200);
+        return new PropertyResource($property);
     }
 
     /**
