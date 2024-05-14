@@ -13,39 +13,27 @@ class PropertyController extends Controller
      */
     public function index()
     {
-        //
+        $properties = Property::all();
+        return response()->json($properties);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StorePropertyRequest $request)
     {
-        //
-    }
+        $property = Property::create($request->all());
+        return response()->json($property, 201);
+     }
 
     /**
      * Display the specified resource.
      */
     public function show(Property $property)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Property $property)
-    {
-        //
+        $property = Property::findOrFail($property->id);
+        return response()->json($property,200);
     }
 
     /**
@@ -53,7 +41,9 @@ class PropertyController extends Controller
      */
     public function update(UpdatePropertyRequest $request, Property $property)
     {
-        //
+        $property = Property::findOrFail($property->id);
+        $property->update($request->all());
+        return response()->json(['message' => "Property updated successfully!"],200);
     }
 
     /**
@@ -61,6 +51,8 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        $property = Property::findOrFail($property->id);
+        $property->delete();
+        return response()->json(["message"=> "Property Deleted successfully!"],200);
     }
 }
