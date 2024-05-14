@@ -23,6 +23,7 @@ class PropertyController extends Controller
      */
     public function store(StorePropertyRequest $request)
     {
+        $request->validated($request->all());
         $property = Property::create($request->all());
         return response()->json($property, 201);
      }
@@ -41,6 +42,7 @@ class PropertyController extends Controller
      */
     public function update(UpdatePropertyRequest $request, Property $property)
     {
+        $request->validated($request->all());
         $property = Property::findOrFail($property->id);
         $property->update($request->all());
         return response()->json(['message' => "Property updated successfully!"],200);

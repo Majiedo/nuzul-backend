@@ -22,7 +22,9 @@ class UpdatePropertyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['string', 'max:255', "min:3"],
+            'price' => ['min:0'],
+            'address' => ['string', 'max:255', "min:3"],
         ];
     }
 }

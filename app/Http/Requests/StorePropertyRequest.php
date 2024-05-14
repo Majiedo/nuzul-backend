@@ -22,7 +22,9 @@ class StorePropertyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'price' => ['required','min:0'],
+            'address' => ['required', 'string', 'max:255'],
         ];
     }
 }
